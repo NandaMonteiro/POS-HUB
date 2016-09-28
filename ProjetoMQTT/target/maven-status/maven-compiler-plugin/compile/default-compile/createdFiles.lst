@@ -1,3 +1,5 @@
 entidades/Lampada.class
-coxenao/Publish.class
 entidades/ArCondicionado.class
+mqtt/Publish.class
+mqtt/Cliente.class
+mqtt/Cliente$ClienteCall.class

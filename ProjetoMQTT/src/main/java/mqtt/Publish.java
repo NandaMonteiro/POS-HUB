@@ -25,7 +25,7 @@ public class Publish {
     String content = "23";
     int qos = 2;
     String broker = "tcp://0.0.0.0:1883";
-    String clientId = "job";
+    String clientId = "fernanda";
     
     public MqttClient conectar() {        
        
@@ -62,10 +62,12 @@ public class Publish {
     public void publicar(String men) {
         
         try {
+//            MqttMessage message = new MqttMessage();
+//            message.setPayload(men.getBytes());
+//            message.setQos(qos);
+//            message.setRetained(false);
+            sampleClient.publish("sensor/temperatura", "16".getBytes(), 2, true);
             
-            MqttMessage message = new MqttMessage(men.getBytes());
-            message.setQos(qos);
-            sampleClient.publish(topic, message);
             
         } catch (MqttException ex) {
             Logger.getLogger(Publish.class.getName()).log(Level.SEVERE, null, ex);

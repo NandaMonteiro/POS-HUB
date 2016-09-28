@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.projetomqtt;
+package restfull;
 
 import mqtt.Cliente;
 import mqtt.Publish;
@@ -20,11 +20,10 @@ public class app {
         Cliente c = new Cliente();
         String m = "2";
         
-                c.subscribe();
-
+        c.subscribe();
         p.conectar();
         p.publicar(m);
-        p.desconectar();
+//        p.desconectar();
     }
     
 }
