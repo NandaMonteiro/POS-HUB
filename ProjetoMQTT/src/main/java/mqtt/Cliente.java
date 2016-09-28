@@ -60,7 +60,6 @@ public class Cliente {
             int sampleValue = (int) ((bytes[0] << 8) | (bytes[1] & 0x00FF));
             Publish p = new Publish();
             
-           
             System.out.println("msg: " + string + "-> " + sampleValue);
         }
 

@@ -17,7 +17,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 /**
  *
- * @author Junior
+ * @author nanda
  */
 public class publicador {
 
