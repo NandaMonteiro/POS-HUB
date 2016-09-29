@@ -7,10 +7,11 @@ package restfull;
 
 import entidades.ArCondicionado;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-import org.eclipse.paho.client.mqttv3.MqttClient;
+import mqtt.MqttRecurso;
 import org.json.JSONObject;
 
 
@@ -21,22 +22,23 @@ import org.json.JSONObject;
 @Path("arcondicionado")
 public class ArcondicionadoRest {
     
-    MqttClient sampleClient;
-    String topic = "sensor/temperatura";
-    String content = "23";
-    int qos = 2;
-    String broker = "tcp://0.0.0.0:1883";
-    String clientId = "fernanda";
+    private MqttRecurso recurso;
+    
+    
+   
 
     /**
      * This is a sample web service operation
      * @param men
      */
     
+    
+    
     private ArCondicionado arCondicionado;
     
     public ArcondicionadoRest(){
         arCondicionado = ArCondicionado.getInstacia();
+        recurso = MqttRecurso.getInstance();
     }
             
     @GET
@@ -48,5 +50,22 @@ public class ArcondicionadoRest {
        jsonObject.put("estado", estado); 
        return Response.ok(200).entity(""+jsonObject).build();
        
+    }
+    
+    @PUT
+    @Path("ligar")
+    @Produces("application/json")
+    public Response ligarArCondicionado(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("success", true);
+        try{
+            recurso.getArCondicionadoMqtt().sendMessage("arcondicionado/ligar", "liga");
+             jsonObject.put("success", true);
+        }
+        catch(Throwable e){
+             jsonObject.put("erro", e.getMessage());
+            return Response.ok(500).entity(""+jsonObject).build();
+        }
+        return Response.ok(200).entity(""+jsonObject).build();
     }
 }
