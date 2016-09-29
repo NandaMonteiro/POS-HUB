@@ -13,18 +13,18 @@ import org.eclipse.paho.client.mqttv3.MqttException;
  *
  * @author nanda
  */
-public class app {
+public class app1 {
     public static void main(String[] args) throws MqttException {
         
-//        Publicador p = new Publicador();
-        Cliente c = new Cliente();
-//        String m = "2";
+        Publicador p = new Publicador();
+//        Cliente c = new Cliente();
+        String m = "6";
         
-        c.subscribe();
+//        c.subscribe();
 //        System.out.println("kkk");
-//        p.conectar();
+        p.conectar();
 //        System.out.println("kjhkjhkjhjkhk");
-//        p.publicar(m);
+        p.publicar(m);
 //        System.out.println("111111");
 //        p.desconectar();
     }

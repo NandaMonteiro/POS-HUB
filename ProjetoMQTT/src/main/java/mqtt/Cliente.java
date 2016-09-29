@@ -20,7 +20,7 @@ import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
  */
 public class Cliente {
     MqttClient client;
-    String topic = "sensor/temperatura/";
+    String topic = "sensor/temperatura/#";
     int qos = 2;
     String broker = "tcp://0.0.0.0:1883";
     String clientId = "nanda";
@@ -32,8 +32,6 @@ public class Cliente {
         try {
             
             client = new MqttClient(broker, clientId, dataStore);
-//            MqttConnectOptions connOpts = new MqttConnectOptions();
-//            connOpts.setCleanSession(true);
             client.setCallback(new ClienteCall());
             client.connect();
             client.subscribe(topic, qos);
@@ -58,7 +56,7 @@ public class Cliente {
             System.out.println("str: "+new String(bytes));
             //lendo o valor numérico
             int sampleValue = (int) ((bytes[0] << 8) | (bytes[1] & 0x00FF));
-            Publish p = new Publish();
+            Publicador p = new Publicador();
             
             System.out.println("msg: " + string + "-> " + sampleValue);
         }

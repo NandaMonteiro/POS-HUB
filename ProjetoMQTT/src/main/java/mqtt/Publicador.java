@@ -18,10 +18,10 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
  *
  * @author nanda
  */
-public class Publish {
+public class Publicador {
     
     MqttClient sampleClient;
-    String topic = "temperatura";
+    String topic = "sensor/temperatura";
     String content = "23";
     int qos = 2;
     String broker = "tcp://0.0.0.0:1883";
@@ -41,7 +41,7 @@ public class Publish {
         return sampleClient;
         
         } catch (MqttException ex) {
-            Logger.getLogger(Publish.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Publicador.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return null;
@@ -53,7 +53,7 @@ public class Publish {
             sampleClient.disconnect();
             
         } catch (MqttException ex) {
-            Logger.getLogger(Publish.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Publicador.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
@@ -62,15 +62,14 @@ public class Publish {
     public void publicar(String men) {
         
         try {
-//            MqttMessage message = new MqttMessage();
-//            message.setPayload(men.getBytes());
-//            message.setQos(qos);
-//            message.setRetained(false);
-            sampleClient.publish("sensor/temperatura", "16".getBytes(), 2, true);
             
+            MqttMessage message = new MqttMessage(men.getBytes());
+            message.setQos(qos);
+            message.setRetained(false);
+            sampleClient.publish(topic, message);            
             
         } catch (MqttException ex) {
-            Logger.getLogger(Publish.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Publicador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
