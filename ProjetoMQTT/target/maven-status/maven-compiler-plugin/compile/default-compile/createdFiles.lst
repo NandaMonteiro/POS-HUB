@@ -1,5 +1,10 @@
 entidades/Lampada.class
+mqtt/Publicador.class
+mqtt/ArCondicionadoMqtt.class
+restfull/ArcondicionadoRest.class
 entidades/ArCondicionado.class
-mqtt/Publish.class
+restfull/MyRest.class
+restfull/app1.class
+restfull/app.class
 mqtt/Cliente.class
 mqtt/Cliente$ClienteCall.class

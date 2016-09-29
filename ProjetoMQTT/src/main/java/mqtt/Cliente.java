@@ -27,12 +27,10 @@ public class Cliente {
     String clientId = "nanda";
     
     public void subscribe(){
-        String tmpDir = System.getProperty("java.io.tmpdir");
-        MqttDefaultFilePersistence dataStore = new MqttDefaultFilePersistence(tmpDir);
         
         try {
             
-            client = new MqttClient(broker, clientId, dataStore);
+            client = new MqttClient(broker, clientId);
             client.setCallback(new ClienteCall());
             client.connect();
             client.subscribe(topic, qos);
@@ -55,11 +53,10 @@ public class Cliente {
         public void messageArrived(String string, MqttMessage mm) throws Exception {
             
             byte[] bytes = mm.getPayload();
-            System.out.println("array: "+Arrays.toString(bytes));
             System.out.println("str: "+new String(bytes));
             //lendo o valor numérico
-            int sampleValue = (int) ((bytes[0] << 8) | (bytes[1] & 0x00FF));            
-            System.out.println("msg: " + string + "-> " + sampleValue);
+            //int sampleValue = (int) ((bytes[0] << 8) | (bytes[1] & 0x00FF));            
+            //System.out.println("msg: " + string + "-> " + sampleValue);
         }
 
         @Override

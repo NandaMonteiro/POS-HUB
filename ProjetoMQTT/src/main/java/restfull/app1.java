@@ -5,7 +5,6 @@
  */
 package restfull;
 
-import mqtt.Cliente;
 import mqtt.Publicador;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -18,7 +17,7 @@ public class app1 {
         
         Publicador p = new Publicador();
 //        Cliente c = new Cliente();
-        String m = "6";
+        String m = "ola mundo";
         
 //        c.subscribe();
 //        System.out.println("kkk");

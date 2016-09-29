@@ -5,21 +5,30 @@
  */
 package entidades;
 
+import java.io.Serializable;
+import javax.ejb.Singleton;
+import javax.ws.rs.Path;
+
 /**
  *
  * @author nanda
  */
-public class ArCondicionado {
+
+public class ArCondicionado implements Serializable{
     
     private int temperatura;
+    private static ArCondicionado arCondicionado;
+    private boolean ligado;
 
-    public ArCondicionado() {
+    private ArCondicionado() {
     }
-
-    public ArCondicionado(int temperatura) {
-        this.temperatura = temperatura;
+    
+    public static ArCondicionado getInstacia(){
+        if(arCondicionado == null){
+            arCondicionado = new ArCondicionado();
+        }
+        return arCondicionado;
     }
-
 
     public int getTemperatura() {
         return temperatura;
@@ -29,11 +38,18 @@ public class ArCondicionado {
         this.temperatura = temperatura;
     }
 
+    public boolean isLigado() {
+        return ligado;
+    }
+
+    public void setLigado(boolean ligado) {
+        this.ligado = ligado;
+    }
+
     @Override
     public String toString() {
-        return "ArCondicionado{" +" temperatura= " + temperatura + '}';
+        return "ArCondicionado{" + "temperatura=" + temperatura + ", ligado=" + ligado + '}';
     }
-    
-    
+ 
     
 }

@@ -5,19 +5,26 @@
  */
 package entidades;
 
+import java.io.Serializable;
+
 /**
  *
  * @author nanda
  */
-public class Lampada {
+public class Lampada implements Serializable{
     
     private boolean ligada;
+    private static Lampada lampada;
 
-    public Lampada() {
+    private Lampada() {
     }
 
-    public Lampada(boolean ligada) {
-        this.ligada = ligada;
+    public static Lampada getIntancia() {
+        if(lampada == null){
+            lampada = new Lampada();
+        }
+        return lampada;
+        
     }
 
     public boolean isLigada() {
