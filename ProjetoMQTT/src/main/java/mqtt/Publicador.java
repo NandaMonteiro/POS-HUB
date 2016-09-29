@@ -51,6 +51,7 @@ public class Publicador {
         try {
             
             sampleClient.disconnect();
+            System.out.println("desconectou ");
             
         } catch (MqttException ex) {
             Logger.getLogger(Publicador.class.getName()).log(Level.SEVERE, null, ex);
