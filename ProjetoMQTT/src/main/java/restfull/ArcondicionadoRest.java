@@ -6,7 +6,6 @@
 package restfull;
 
 import entidades.ArCondicionado;
-import javax.jws.WebParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -25,17 +24,11 @@ import org.json.JSONObject;
 public class ArcondicionadoRest {
     
     private MqttRecurso recurso;
-    
-    
-   
 
     /**
      * This is a sample web service operation
      * @param men
      */
-    
-    
-    
     private ArCondicionado arCondicionado;
     
     public ArcondicionadoRest(){

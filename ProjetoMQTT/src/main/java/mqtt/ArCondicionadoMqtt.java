@@ -6,13 +6,6 @@
 package mqtt;
 
 import entidades.ArCondicionado;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Initialized;
-import javax.enterprise.event.Event;
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
-import javax.inject.Named;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -22,73 +15,6 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  *
  * @author nanda
  */
-/*
-@ApplicationScoped
-public class ArCondicionadoMqtt implements MqttCallback{
-
-     String broker = "tcp://0.0.0.0:1883";
-    private final String myId = "arcondicionadoMqtt";
-    private MqttClient client;
-
-    
-    @PostConstruct
-    private void init( @Observes @Initialized(ApplicationScoped.class) Object init ){
-        try{
-            connect();
-        }catch(MqttException e){
-            System.out.println("erro ao inicializar ArCondicionadoMqtt");
-        }
-    }
-    
-    
-    
-    private void connect() throws MqttException{
-         client = new MqttClient(broker, myId);
-            client.connect();
-            client.setCallback(this);
-            client.subscribe("arcondicionado/#");
-    }
-    
-    public void publicar(String topic, String men ) {
-        System.out.println("publicar mensagem " + men+ "para topico: " + topic);
-        try {
-            
-            MqttMessage message = new MqttMessage(men.getBytes());
-            client.publish(topic, message);
-            System.out.println("enviou");
-            
-        } catch (MqttException ex) {
-            System.out.println("erro ao publicar");
-            System.out.println(ex.getMessage());
-        }
-    }
-    
-    @Override
-    public void connectionLost(Throwable thrwbl) {
-        System.out.println("Erro: " + thrwbl.getMessage());}
-
-    @Override
-    public void messageArrived(String topic, MqttMessage mm) throws Exception {
-        System.out.println("chegou mensagem");
-        ArCondicionado ar = ArCondicionado.getInstacia();
-        System.out.println("recebeu mensagem:" + new String(mm.getPayload()));
-            if(topic.equals("arcondicionado/ligar")){
-                System.out.println("mandar ligar o ar");
-                ar.setLigado(true);
-            }
-            else{
-                ar.setLigado(false);
-            }
-    }
-
-    @Override
-    public void deliveryComplete(IMqttDeliveryToken imdt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-}
-*/
-
 
 public class ArCondicionadoMqtt implements MqttCallback {
     
