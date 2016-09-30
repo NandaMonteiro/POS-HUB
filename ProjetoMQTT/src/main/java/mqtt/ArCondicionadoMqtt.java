@@ -139,6 +139,7 @@ public class ArCondicionadoMqtt implements MqttCallback {
     public void messageArrived(String topic, MqttMessage mm) throws Exception {
         
         String msg = topic + "::" + new String(mm.getPayload());
+        String valor = mm.toString();
         
         System.out.println("enviar para o cliente por meio de websocket");
         System.out.println("mensagem:" + new String(mm.getPayload()));
@@ -146,13 +147,22 @@ public class ArCondicionadoMqtt implements MqttCallback {
         ArCondicionado ar = ArCondicionado.getInstacia();
         if(topic.equals("arcondicionado/ligar")){
                 System.out.println("mandar ligar o ar");
-                ar.setLigado(true);
+                if(!ar.isLigado())
+                    ar.setLigado(true);
+                else{
+                    ar.setLigado(false);
             }
-            else{
-                ar.setLigado(false);
-            }
-        
-        
+        }
+            
+        else if(topic.equals("arcondicionado/mudarTemperatura")){
+            System.out.println("mudando temperatura");
+            System.out.println("TEMP = " + ar.getTemperatura());
+            int temp;
+            temp = Integer.parseInt(valor);
+            System.out.println("temp = " + temp);
+            ar.setTemperatura(temp);
+            System.out.println("temperatura = " + ar.getTemperatura());
+        }
     }
 
     @Override
@@ -161,3 +171,25 @@ public class ArCondicionadoMqtt implements MqttCallback {
     }
     
 }
+
+
+
+
+
+
+// public void messageArrived(String topic, MqttMessage mm) throws Exception {
+//        
+//        String msg = topic + "::" + new String(mm.getPayload());
+//        
+//        System.out.println("enviar para o cliente por meio de websocket");
+//        System.out.println("mensagem:" + new String(mm.getPayload()));
+//        System.out.println("topico: " + topic);
+//        ArCondicionado ar = ArCondicionado.getInstacia();
+//        if(topic.equals("arcondicionado/ligar")){
+//                System.out.println("mandar ligar o ar");
+//                ar.setLigado(true);
+//            }
+//            else{
+//                ar.setLigado(false);
+//            }
+//        

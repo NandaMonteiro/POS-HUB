@@ -6,9 +6,11 @@
 package restfull;
 
 import entidades.ArCondicionado;
+import javax.jws.WebParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import mqtt.MqttRecurso;
@@ -67,5 +69,23 @@ public class ArcondicionadoRest {
             return Response.ok(500).entity(""+jsonObject).build();
         }
         return Response.ok(200).entity(""+jsonObject).build();
+    }
+    
+    
+    @PUT
+    @Path("mudarTemperatura/{valor}")
+    @Produces("application/json")
+    public Response mudarTemperatura(@PathParam("valor")int valor){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("success", true);
+
+        try{
+            recurso.getArCondicionadoMqtt().sendMessage("arcondicionado/mudarTemperatura", Integer.toString(valor));
+            jsonObject.put("succeess", true);
+        }
+        catch(Throwable e){
+            jsonObject.put("Erro", e.getMessage());
+        }
+        return Response.ok(200).entity("" + jsonObject).build();
     }
 }

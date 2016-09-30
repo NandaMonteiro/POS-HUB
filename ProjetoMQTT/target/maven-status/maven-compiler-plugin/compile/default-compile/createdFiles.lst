@@ -1,5 +1,6 @@
 entidades/Lampada.class
 mqtt/ArCondicionadoMqtt.class
+mqtt/MqttRecurso.class
 restfull/ArcondicionadoRest.class
 entidades/ArCondicionado.class
 restfull/MyRest.class
