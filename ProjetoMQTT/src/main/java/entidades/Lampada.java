@@ -11,8 +11,8 @@ import java.io.Serializable;
  *
  * @author nanda
  */
-public class Lampada implements Serializable{
-    
+public class Lampada implements Serializable {
+
     private boolean ligada;
     private static Lampada lampada;
 
@@ -20,11 +20,11 @@ public class Lampada implements Serializable{
     }
 
     public static Lampada getIntancia() {
-        if(lampada == null){
+        if (lampada == null) {
             lampada = new Lampada();
         }
         return lampada;
-        
+
     }
 
     public boolean isLigada() {
@@ -35,11 +35,17 @@ public class Lampada implements Serializable{
         this.ligada = ligada;
     }
 
+    public boolean isLigado() {
+        return ligada;
+    }
+
+    public void setLigado(boolean ligado) {
+        this.ligada = ligado;
+    }
+
     @Override
     public String toString() {
         return "Lampada{" + "ligada=" + ligada + '}';
     }
-    
-    
-    
+
 }

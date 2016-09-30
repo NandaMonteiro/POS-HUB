@@ -23,7 +23,7 @@ public class Cliente {
     MqttClient client;
     String topic = "sensor/temperatura/#";
     int qos = 2;
-    String broker = "tcp://0.0.0.0:1883";
+    String broker = "tcp://192.168.99.100:1883";
     String clientId = "nanda";
     
     public void subscribe(){

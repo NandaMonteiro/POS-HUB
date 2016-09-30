@@ -15,10 +15,12 @@ public class MqttRecurso {
     
     private MqttRecurso(){
         arMqtt = new ArCondicionadoMqtt();
+        lampadaMqtt = new LampadaMqtt();
        
     }
     
     private final ArCondicionadoMqtt arMqtt;
+    private final LampadaMqtt lampadaMqtt;
     
     
     public static MqttRecurso getInstance(){
@@ -30,6 +32,10 @@ public class MqttRecurso {
     
     public ArCondicionadoMqtt getArCondicionadoMqtt(){
         return arMqtt;
+    }
+
+    public LampadaMqtt getLampadaMqtt(){
+        return lampadaMqtt;
     }
     
     
