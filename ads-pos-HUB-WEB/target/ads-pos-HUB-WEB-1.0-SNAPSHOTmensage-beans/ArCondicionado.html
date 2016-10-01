@@ -21,20 +21,41 @@ and open the template in the editor.
                     $.post("http://localhost:8080/ProjetoMQTT/api/arcondicionado/ligar", {estado: "true"});
                     exibirStatus();
                 });
+                $("button2").click(function () {
+                    $.post("http://localhost:8080/ProjetoMQTT/api/arcondicionado/mudarTemperatura/(valor)", {mudar: "true"});
+                    exibirTemperatura()();
+                });
 
 
             });
 
             function exibirStatus() {
                 $.getJSON("http://localhost:8080/ProjetoMQTT/api/arcondicionado/estado", function (resultado) {
-                    
-                    var estado = resultado.estado ? 'Ligado' : 'Desligado';
-                    var estadoBtn = resultado.estado ? 'Desligar' : 'Ligar';
-                    var imagem = resultado.estado ? 'lampada-acesa.jpg' : 'lampada-apagada.jpg'; 
-                    
-                    document.getElementById("imagem").src=imagem;
+
+                    var estado = resultado.estado ? 'Desligado' : 'Ligado';
+                    var estadoBtn = resultado.estado ? 'Ligar' : 'Desligar';
+                    var imagem = resultado.estado ?  'arcondicionado-desligado.png' : 'temperatura.png';
+
+                    document.getElementById("imagem").src = imagem;
                     document.getElementById("estado").innerHTML = estado;
                     document.getElementById("btn-io").innerHTML = estadoBtn;
+                });
+            }
+
+
+            function exibirTemperatura() {
+                $.getJSON("http://localhost:8080/ProjetoMQTT/api/arcondicionado/temperatura", function (resultado) {
+
+                    var estado = resultado.estado ? 'Ligado' : 'Desligado';
+                    var temperatura = resultado.mudar ? 'valor' : 'valor2';
+                    var imagem = resultado.estado ? 'arcondicionado-desligado.png' : 'temperatura.png';
+
+                    document.getElementById("imagem").src = imagem;
+                    document.getElementById("temperatura").innerHTML = temperatura;
+                    document.getElementById("btn-io").innerHTML = estado;
+                    document.getElementById("btn-io2").innerHTML = temperatura;
+
+
                 });
             }
 
@@ -47,13 +68,20 @@ and open the template in the editor.
         <!--        <form action="http://localhost:8080/ProjetoMQTT/api/lampada/ligar" method="POST">
                     <button type="submit">Mudar Status</button>
                 </form>-->
-
+        <div id="index">
         <button id="btn-io" class="btn btn-primary">Ligar</button>
+        <br/>
+        <br/>
+         <button id="btn-io2" class="btn btn-primary">Aumentar</button>
+        <h1>TEMPERATURA</h1>
+        <button id="btn-io2" class="btn btn-primary">Diminuir</button>
 
         <div id="estado"> 
         </div>
 
-        <img id="imagem" src="lampada-apagada.jpg" />
+        <img id="imagem" src="arcondicionado-desligado.png" />
         
+       </div>
+
     </body>
 </html>

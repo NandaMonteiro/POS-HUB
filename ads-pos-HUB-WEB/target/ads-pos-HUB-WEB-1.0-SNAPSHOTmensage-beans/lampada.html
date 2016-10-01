@@ -30,7 +30,7 @@ and open the template in the editor.
 
                     var estado = resultado.estado ? 'Ligado' : 'Desligado';
                     var estadoBtn = resultado.estado ? 'Desligar' : 'Ligar';
-                    var imagem = resultado.estado ? 'lampada-acesa.jpg' : 'lampada-apagada.jpg';
+                    var imagem = resultado.estado ? 'lampada-acesa.jpg' : 'lampada-apagada.png';
 
                     document.getElementById("imagem").src = imagem;
                     document.getElementById("estado").innerHTML = estado;
@@ -43,14 +43,14 @@ and open the template in the editor.
         </script>
     </head>
     <body>
-
+        <div id="index">
         <button id="btn-io" class="btn btn-primary">Ligar</button>
 
         <div id="estado"> 
         </div>
 
-        <img id="imagem" src="lampada-apagada.jpg" />
+        <img id="imagem" src="lampada-apagada.png" />
 
-
+</div>
     </body>
 </html>

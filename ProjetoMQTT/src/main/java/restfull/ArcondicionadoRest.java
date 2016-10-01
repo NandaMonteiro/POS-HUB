@@ -79,7 +79,7 @@ public class ArcondicionadoRest {
     }
     
     
-    @PUT
+    @POST
     @Path("mudarTemperatura/{valor}")
     @Produces("application/json")
     public Response mudarTemperatura(@PathParam("valor")int valor){
