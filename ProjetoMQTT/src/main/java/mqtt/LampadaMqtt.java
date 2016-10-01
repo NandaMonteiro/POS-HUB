@@ -18,7 +18,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class LampadaMqtt implements MqttCallback {
 
-    private final String brokerUrl = "tcp://0.0.0.0:1883";
+    private final String brokerUrl = "tcp://192.168.99.100:1883";
     private final String myId = "lampadamqtt";
     private MqttClient client;
     private Throwable e;
