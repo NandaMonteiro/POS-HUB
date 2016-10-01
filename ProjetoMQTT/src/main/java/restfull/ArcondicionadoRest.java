@@ -49,6 +49,18 @@ public class ArcondicionadoRest {
        
     }
     
+    @GET
+    @Produces("application/json")
+    @Path("temperatura")
+    public Response getTemperatura(){
+        JSONObject jsonObject = new JSONObject();
+        int temperatura = arCondicionado.getTemperatura();
+        jsonObject.put("temperatura", temperatura);
+        return Response.ok(200).entity(""+jsonObject).build();
+    }
+    
+    
+    
     @POST
     @Path("ligar")
     @Produces("application/json")

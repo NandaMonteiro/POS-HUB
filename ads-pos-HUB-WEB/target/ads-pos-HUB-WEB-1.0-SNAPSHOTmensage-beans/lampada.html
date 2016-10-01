@@ -10,16 +10,47 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="componentes/css/bootstrap.min.css" type="text/css"/>
         <link rel="stylesheet" href="componentes/css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="componentes/css/edicao-pagina.css" type="text/css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+        <script type="text/javascript" >
+
+            $(document).ready(function () {
+                $("button").click(function () {
+                    $.post("http://localhost:8080/ProjetoMQTT/api/lampada/ligar", {estado: "true"});
+                    exibirStatus();
+                });
+
+
+            });
+
+            function exibirStatus() {
+                $.getJSON("http://localhost:8080/ProjetoMQTT/api/lampada/estado", function (resultado) {
+
+                    var estado = resultado.estado ? 'Ligado' : 'Desligado';
+                    var estadoBtn = resultado.estado ? 'Desligar' : 'Ligar';
+                    var imagem = resultado.estado ? 'lampada-acesa.jpg' : 'lampada-apagada.jpg';
+
+                    document.getElementById("imagem").src = imagem;
+                    document.getElementById("estado").innerHTML = estado;
+                    document.getElementById("btn-io").innerHTML = estadoBtn;
+                });
+            }
+
+
+
+        </script>
     </head>
     <body>
-        <form>
-            <button type="button" class="btn btn-default btn-lg" aria-label="">
-                <span class="glyphicon glyphicon glyphicon-off" aria-hidden="true"></span> Ligar
-            </button>            
-        </form>
+
+        <button id="btn-io" class="btn btn-primary">Ligar</button>
+
+        <div id="estado"> 
+        </div>
+
+        <img id="imagem" src="lampada-apagada.jpg" />
+
+
     </body>
 </html>
