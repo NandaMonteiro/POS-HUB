@@ -16,50 +16,100 @@ and open the template in the editor.
 
         <script type="text/javascript" >
 
+            var estado;
+            var temperatura;
+            var temperaturaMaxima;
+            var temperaturaMinima;
+
             $(document).ready(function () {
-                $("button").click(function () {
-                    $.post("http://localhost:8080/ProjetoMQTT/api/arcondicionado/ligar", {estado: "true"});
-                    exibirStatus();
-                });
-                $("button2").click(function () {
-                    $.post("http://localhost:8080/ProjetoMQTT/api/arcondicionado/mudarTemperatura/(valor)", {mudar: "true"});
-                    exibirTemperatura()();
-                });
+                // Pegar propriedades do arcondicionado
+                getPropriedades();
 
+                // Exibir status do arcondicionado
+                exibirStatus();
 
+                // Mostrar informacoes da temperatura
+                exibirTemperatura();
+
+                $("#btn-io").click(function () {
+                    $.ajax({
+                        method: "POST",
+                        url: "http://localhost:8080/ProjetoMQTT/api/arcondicionado/ligar"
+                    }).done(function (data) {
+                        // Exibir status
+                        exibirStatus();
+                        // Mostrar informacoes da temperatura
+                        exibirTemperatura();
+                    });
+                });
+                $("#btn-aumentar").click(function () {
+                    $.ajax({
+                        method: "POST",
+                        url: "http://localhost:8080/ProjetoMQTT/api/arcondicionado/mudarTemperatura/(elevar)",
+                        data: {elevar: true}
+                    }).done(function (result) {
+                        exibirTemperatura();
+                    }).fail(function(erro) {
+                        alert(JSON.stringify(erro));
+                    });
+                });
+                $("#btn-diminuir").click(function () {
+                    $.ajax({
+                        method: "POST",
+                        url: "http://localhost:8080/ProjetoMQTT/api/arcondicionado/mudarTemperatura/(elevar)",
+                        data: {elevar: false}
+                    }).done(function (result) {
+                        exibirTemperatura();
+                    }).fail(function(erro) {
+                        alert(JSON.stringify(erro));
+                    });
+                });
             });
+
+            function getPropriedades() {
+                // Pegar valores das propriedades do arcondicionado
+                $.getJSON("http://localhost:8080/ProjetoMQTT/api/arcondicionado/propriedades", function (resultado) {
+                    temperaturaMinima = resultado.temperaturaMinima;
+                    temperaturaMaxima = resultado.temperaturaMaxima;
+                });
+            }
 
             function exibirStatus() {
                 $.getJSON("http://localhost:8080/ProjetoMQTT/api/arcondicionado/estado", function (resultado) {
-
-                    var estado = resultado.estado ? 'Desligado' : 'Ligado';
-                    var estadoBtn = resultado.estado ? 'Ligar' : 'Desligar';
-                    var imagem = resultado.estado ?  'arcondicionado-desligado.png' : 'temperatura.png';
-
-                    document.getElementById("imagem").src = imagem;
-                    document.getElementById("estado").innerHTML = estado;
-                    document.getElementById("btn-io").innerHTML = estadoBtn;
+                    estado = resultado.estado;
+                    // Exibir a temperatura atual (caso esteja ligado)
+                    if (estado) {
+                        $("#imagem").attr("src", "temperatura.png");
+                        $("#estado").html("Ligado");
+                        $("#btn-io").html("Desligar");
+                        $("#opcoes").show();
+                    } else {
+                        $("#imagem").attr("src", "arcondicionado-desligado.png");
+                        $("#estado").html("Desligado");
+                        $("#btn-io").html("Ligar");
+                        $("#opcoes").hide();
+                    }
                 });
-            }
 
+            }
 
             function exibirTemperatura() {
+
                 $.getJSON("http://localhost:8080/ProjetoMQTT/api/arcondicionado/temperatura", function (resultado) {
+                    temperatura = resultado.temperatura;
+                    if (temperatura) {
+                        $("#temperatura").html(temperatura);
 
-                    var estado = resultado.estado ? 'Ligado' : 'Desligado';
-                    var temperatura = resultado.mudar ? 'valor' : 'valor2';
-                    var imagem = resultado.estado ? 'arcondicionado-desligado.png' : 'temperatura.png';
-
-                    document.getElementById("imagem").src = imagem;
-                    document.getElementById("temperatura").innerHTML = temperatura;
-                    document.getElementById("btn-io").innerHTML = estado;
-                    document.getElementById("btn-io2").innerHTML = temperatura;
-
-
+                        if (temperatura === temperaturaMaxima) {
+                            $("#btn-aumentar").attr("disabled", "disabled");
+                        }
+                        if (temperatura === temperaturaMinima) {
+                            $("#btn-diminuir").attr("disabled", "disabled");
+                        }
+                    }
                 });
+
             }
-
-
 
         </script>
     </head>
@@ -69,19 +119,20 @@ and open the template in the editor.
                     <button type="submit">Mudar Status</button>
                 </form>-->
         <div id="index">
-        <button id="btn-io" class="btn btn-primary">Ligar</button>
-        <br/>
-        <br/>
-         <button id="btn-io2" class="btn btn-primary">Aumentar</button>
-        <h1>TEMPERATURA</h1>
-        <button id="btn-io2" class="btn btn-primary">Diminuir</button>
+            <div>
+                <button id="btn-io" class="btn btn-primary">Ligar</button>
+            </div>
+            <div id="arcondicionado">
+                <h1>Arcondicionado: <span id="estado"></span></h1>
+                <img id="imagem" src="arcondicionado-desligado.png" alt="Ar Condicionado"/>
+            </div>
+            <div id="opcoes" style="display: none">
+                <button id="btn-aumentar" class="btn btn-primary">Aumentar</button>
+                <h1>TEMPERATURA: <span id="temperatura"></span></h1>
+                <button id="btn-diminuir" class="btn btn-primary">Diminuir</button>
+            </div>
 
-        <div id="estado"> 
         </div>
-
-        <img id="imagem" src="arcondicionado-desligado.png" />
-        
-       </div>
 
     </body>
 </html>

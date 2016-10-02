@@ -6,8 +6,6 @@
 package entidades;
 
 import java.io.Serializable;
-import javax.ejb.Singleton;
-import javax.ws.rs.Path;
 
 /**
  *
@@ -16,11 +14,16 @@ import javax.ws.rs.Path;
 
 public class ArCondicionado implements Serializable{
     
+    public static final int TEMPERATURA_MINIMA = 16;
+    public static final int TEMPERATURA_MAXIMA = 25;
+    public static final int TEMPERATURA_INICIAL = TEMPERATURA_MAXIMA;
+    
     private int temperatura;
     private static ArCondicionado arCondicionado;
     private boolean ligado;
 
     private ArCondicionado() {
+        this.init();
     }
     
     public static ArCondicionado getInstacia(){
@@ -50,6 +53,9 @@ public class ArCondicionado implements Serializable{
     public String toString() {
         return "ArCondicionado{" + "temperatura=" + temperatura + ", ligado=" + ligado + '}';
     }
- 
+
+    private void init() {
+        this.setTemperatura(TEMPERATURA_INICIAL);
+    }
     
 }
